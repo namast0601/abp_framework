@@ -11,4 +11,5 @@ public interface IBookAppService :
         CreateUpdateBookDto>
 {
     Task<ListResultDto<AuthorLookupDto>> GetAuthorLookupAsync();
+    Task<ListResultDto<BookDto>> GetBookByName(string nameFind);
 }

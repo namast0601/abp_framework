@@ -106,6 +106,38 @@ public class BookAppService :
         );
     }
 
+    public async Task<ListResultDto<BookDto>> GetBookByName(string nameFind)
+    {
+        // Lấy IQueryable<Book> từ repository
+        var bookQueryable = await Repository.GetQueryableAsync();
+        var authorQueryable = await _authorRepository.GetQueryableAsync();
+
+        // Lọc theo tên (nếu có)
+        if (!string.IsNullOrWhiteSpace(nameFind))
+        {
+            bookQueryable = bookQueryable.Where(b => b.Name.Contains(nameFind));
+        }
+
+        // Join sách với tác giả
+        var query = from book in bookQueryable
+            join author in authorQueryable on book.AuthorId equals author.Id
+            select new { book, author };
+
+        // Thực thi truy vấn
+        var queryResult = await AsyncExecuter.ToListAsync(query);
+
+        // Map sang BookDto và gán AuthorName
+        var bookDtos = queryResult.Select(x =>
+        {
+            var dto = ObjectMapper.Map<Book, BookDto>(x.book);
+            dto.AuthorName = x.author.Name;
+            return dto;
+        }).ToList();
+
+        // Trả về kết quả (ListResultDto)
+        return new ListResultDto<BookDto>(bookDtos);
+    }
+
     private static string NormalizeSorting(string sorting)
     {
         if (sorting.IsNullOrEmpty())
