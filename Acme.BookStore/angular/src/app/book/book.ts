@@ -2,7 +2,7 @@ import { CoreModule, ListService, LocalizationPipe, PagedResultDto } from '@abp/
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { BookService } from '../proxy/books';
-import { BookDto, bookTypeOptions } from '../proxy';
+import { AuthorDto, BookDto, bookTypeOptions } from '../proxy';
 import { ModalCloseDirective, ModalComponent } from '@abp/ng.theme.shared';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
@@ -16,6 +16,9 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 // add new imports
 import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { AuthorService } from '../proxy/author';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-book',
@@ -53,12 +56,14 @@ export class BookComponent implements OnInit {
   isModalOpen = false;
 
 //change the constructor
+  protected authors$: Observable<PagedResultDto<AuthorDto>>;
   constructor(
     public readonly list: ListService,
     private bookService: BookService,
     private fb: FormBuilder,
-    private confirmation: ConfirmationService // inject the ConfirmationService
-  ) {}
+    private confirmation: ConfirmationService ,// inject the ConfirmationService
+    private authorService: AuthorService
+) {}
 
 
   ngOnInit() {
@@ -67,6 +72,7 @@ export class BookComponent implements OnInit {
     this.list.hookToQuery(bookStreamCreator).subscribe((response) => {
       this.book = response;
     });
+    this.authors$ = this.authorService.getList({ maxResultCount: 100 });
   }
 
   createBook() {
@@ -77,6 +83,7 @@ export class BookComponent implements OnInit {
 
   buildForm() {
     this.form = this.fb.group({
+      authorId: [this.selectedBook.authorId || null, Validators.required],
       name: ['', Validators.required],
       type: [null, Validators.required],
       publishDate: [null, Validators.required],
