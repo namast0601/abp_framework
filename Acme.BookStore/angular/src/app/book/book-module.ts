@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { BookRoutingModule } from './book-routing-module';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
@@ -11,7 +11,7 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     CommonModule,
     BookRoutingModule,
-    NgxDatatableModule,
+    // NgxDatatableModule,
     NgbDatepickerModule
   ]
 })

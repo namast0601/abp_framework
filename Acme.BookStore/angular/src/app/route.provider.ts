@@ -25,6 +25,7 @@ function configureRoutes() {
         iconClass: 'fas fa-book',
        order: 2,
        layout: eLayoutType.application,
+        requiredPolicy: 'BookStore.Books',
       }
 
   ]);
