@@ -15,6 +15,7 @@ import { environment } from '../environments/environment';
 import { APP_ROUTES } from './app.routes';
 import { APP_ROUTE_PROVIDER } from './route.provider';
 import { BookComponent } from './book/book';
+import { AuthorComponent } from './author/author';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -36,5 +37,6 @@ export const appConfig: ApplicationConfig = {
     provideAbpThemeShared(),
     provideThemeBasicConfig(),
     BookComponent,
+    AuthorComponent
   ]
 };

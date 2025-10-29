@@ -1,5 +1,6 @@
 import { authGuard, eLayoutType, permissionGuard } from '@abp/ng.core';
 import { Routes } from '@angular/router';
+import { AuthorComponent } from './author/author';
 
 export const APP_ROUTES: Routes = [
   {
@@ -14,6 +15,10 @@ export const APP_ROUTES: Routes = [
   {
     path: 'books',
     loadComponent: () => import('./book/book').then(c => c.BookComponent),
+  },
+  {
+    path: 'authors',
+    loadComponent: () => import('./author/author').then(c => c.AuthorComponent),
   },
   {
     path: 'identity',

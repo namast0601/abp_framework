@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { BookService } from '../proxy/books';
 import { BookDto, bookTypeOptions } from '../proxy';
-// import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ModalCloseDirective, ModalComponent } from '@abp/ng.theme.shared';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
